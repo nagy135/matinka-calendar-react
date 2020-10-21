@@ -25,3 +25,6 @@ yarn-debug.log*
 yarn-error.log*
 
 tags
+
+public/logo192.png
+public/logo512.png
