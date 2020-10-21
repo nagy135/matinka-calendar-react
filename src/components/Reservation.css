@@ -1,0 +1,22 @@
+.highlight {
+    color:#ffffff;
+    background: #1abc9c ;
+}
+.highlight:hover {
+    color: #ffffff !important;
+    background: #c22330 !important;
+}
+.react-calendar {
+    width: 70%;
+    margin:auto;
+}
+.modal-title {
+    color: red;
+    width: 50%;
+    display: inline;
+}
+.modal-close {
+    color: red;
+    float: right;
+}
+
