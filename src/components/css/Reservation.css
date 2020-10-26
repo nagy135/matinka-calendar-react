@@ -2,6 +2,11 @@
     color:#ffffff;
     background: #1abc9c ;
 }
+
+.highlight:focus {
+    color:#ffffff !important;
+    background: #1abc9c !important;
+}
 .highlight:hover {
     color: #ffffff !important;
     background: #c22330 !important;
@@ -13,10 +18,8 @@
 .modal-title {
     color: red;
     width: 50%;
-    display: inline;
+    display: block;
 }
 .modal-close {
-    color: red;
     float: right;
 }
-

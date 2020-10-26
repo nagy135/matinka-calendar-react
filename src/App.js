@@ -1,9 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
 import Reservation from "./components/Reservation"
+import Login from "./components/Login"
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 
-function App() {
+
+
+const App = () => {
+    const [logged, setLogged] = useState(false);
     return (
         <div className="App">
             <div className="container">
@@ -13,7 +21,22 @@ function App() {
                     <div className="divider-custom-icon"><i className="fas fa-calendar"></i></div>
                     <div className="divider-custom-line"></div>
                 </div>
-                <Reservation />
+                <Router>
+                    <Switch>
+                        <Route path="/login">
+                            <Login logIn={() => {setLogged(true)}} />
+                        </Route>
+                        <Route path="/">
+                            { logged &&
+                                <Reservation />
+                            }
+                            { !logged &&
+                                <Login logIn={() => {setLogged(true)}} />
+                            }
+
+                        </Route>
+                    </Switch>
+                </Router>
             </div>
         </div>
     );

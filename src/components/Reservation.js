@@ -2,22 +2,26 @@ import React, { useState, useEffect } from 'react';
 import Calendar from "react-calendar";
 import axios from "axios";
 
-import MyForm from "./Form"
+import {Button} from "react-bootstrap";
+
+import AddRecordForm from "./AddRecordForm";
 
 import Modal from 'react-modal';
 
 import 'react-calendar/dist/Calendar.css';
 
-import './Reservation.css'
+import './css/Reservation.css';
+import {formatDate, getKeyByValue} from '../helpers';
+import {recordsUrl} from '../constants';
 
-const recordsUrl = "http://localhost:4000/records";
 
 const Reservation = () => {
 
-    const [value, onChange] = useState(new Date());
+    const [value] = useState(new Date());
 
-    const [marks, setMarks] = useState([]);
+    const [marks, setMarks] = useState({});
 
+    const [date, setDate] = useState('');
 
     // add record {{{ 
     var subtitle;
@@ -33,23 +37,33 @@ const Reservation = () => {
 
     const closeModal = () => {
         setIsOpen(false);
+        refreshDates();
     }
 
-    const customStyles = {
-        content : {
-            top                   : '50%',
-            left                  : '50%',
-            right                 : 'auto',
-            bottom                : 'auto',
-            marginRight           : '-50%',
-            transform             : 'translate(-50%, -50%)'
-        }
-    };
     // }}}
+    
+    const getDate = () => {
+        return date;
+    };
 
+    const deleteRecord = async (id) => {
+        await axios.delete(`${recordsUrl}/${id}`)
+        refreshDates();
+    }
 
-    const datePicked = (e) => {
-        openModal();
+    const datePicked = (date) => {
+        date = formatDate(date);
+        if (
+            Object.values(marks).includes(date)
+        ){
+            const response = window.confirm('Chces zmazat hodinu?');
+            if (response) deleteRecord(
+                getKeyByValue(marks, date)
+            );
+        } else {
+            setDate(date);
+            openModal();
+        }
     }
 
     const refreshDates = () => {
@@ -57,11 +71,12 @@ const Reservation = () => {
             .then(res => {
                 const data = res.data;
                 const records = data.data.records;
-                setMarks(records.map((e) => {
-                    return e.date;
-                }));
-            })
-
+                let newMarks = {};
+                records.map((e) => {
+                    newMarks[e.id] = e.date;
+                });
+                setMarks(newMarks);
+            });
     }
 
     useEffect(() => {
@@ -74,9 +89,9 @@ const Reservation = () => {
                 style={{ height: 500 }}
                 onChange={datePicked}
                 value={value}
-                tileClassName={({ date, view }) => {
-                    const formattedDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-                    if (marks.find(x => x === formattedDate)) {
+                tileClassName={({ date }) => {
+                    const formattedDate = formatDate(date);
+                    if (Object.values(marks).find(x => x === formattedDate)) {
                         return 'highlight'
                     }
                 }}
@@ -86,15 +101,32 @@ const Reservation = () => {
             <Modal
                 isOpen={modalIsOpen}
                 onAfterOpen={afterOpenModal}
-                style={customStyles}
+                style={{
+                    content : {
+                        top: '50%',
+                        left: '50%',
+                        padding: '10px',
+                        right: 'auto',
+                        bottom: 'auto',
+                        marginRight: '-50%',
+                        transform: 'translate(-50%, -50%)'
+                    }
+                }}
                 contentLabel="Pridaj hodinu"
                 ariaHideApp={false}
             >
-                <h2 className='modal-title' ref={_subtitle => (subtitle = _subtitle)}>Pridaj hodinu</h2>
-                <button className='modal-close' onClick={closeModal}>
+                <Button
+                    className="modal-close"
+                    variant="danger"
+                    onClick={closeModal}
+                >
                     <i className="fa fa-times" aria-hidden="true"></i>
-                </button>
-                <MyForm />
+                </Button>
+                <h2 className='modal-title' ref={_subtitle => (subtitle = _subtitle)}>Pridaj hodinu</h2>
+                <AddRecordForm
+                    getPickedDate={getDate}
+                    closeModal={closeModal}
+                />
             </Modal>
         </div>
     );
