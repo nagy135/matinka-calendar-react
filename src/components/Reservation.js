@@ -15,7 +15,7 @@ import {formatDate, getKeyByValue} from '../helpers';
 import {recordsUrl} from '../constants';
 
 
-const Reservation = () => {
+const Reservation = (props) => {
 
     const [value] = useState(new Date());
 
@@ -23,16 +23,35 @@ const Reservation = () => {
 
     const [date, setDate] = useState('');
 
+    const [guestRecord, setGuestRecord] = useState({
+        id: 0,
+        date: '',
+        time: '',
+        title: '',
+        description: ''
+    });
+
+    const getRecordDetail = async (date) => {
+        const response = await axios.get(`${recordsUrl}/find-by-date`, {
+            params: {
+                date
+            }
+        });
+        setGuestRecord(response.data.data.record);
+    };
+
     // add record {{{ 
     var subtitle;
     const [modalIsOpen,setIsOpen] = React.useState(false);
+    const [guestModalIsOpen,setGuestIsOpen] = React.useState(false);
 
     const openModal = () => {
         setIsOpen(true);
     }
 
-    const afterOpenModal = () => {
-        subtitle.style.color = '#1abc9c';
+    const openGuestModal = async (date) => {
+        await getRecordDetail(date);
+        setGuestIsOpen(true);
     }
 
     const closeModal = () => {
@@ -40,8 +59,20 @@ const Reservation = () => {
         refreshDates();
     }
 
+    const closeGuestModal = () => {
+        setGuestIsOpen(false);
+    }
+
+    const afterOpenModal = () => {
+        subtitle.style.color = '#1abc9c';
+    }
+
+    const guestAfterOpenModal = () => {
+        subtitle.style.color = '#1abc9c';
+    }
+
     // }}}
-    
+
     const getDate = () => {
         return date;
     };
@@ -56,14 +87,22 @@ const Reservation = () => {
         if (
             Object.values(marks).includes(date)
         ){
-            const response = window.confirm('Chces zmazat hodinu?');
-            if (response) deleteRecord(
-                getKeyByValue(marks, date)
-            );
+            if (props.logged){
+                const response = window.confirm('Chces zmazat hodinu?');
+                if (response)
+                    deleteRecord(
+                        getKeyByValue(marks, date)
+                    );
+            } else {
+                openGuestModal(date);
+            }
         } else {
-            setDate(date);
-            openModal();
+            if (props.logged){
+                setDate(date);
+                openModal();
+            }
         }
+
     }
 
     const refreshDates = () => {
@@ -127,6 +166,34 @@ const Reservation = () => {
                     getPickedDate={getDate}
                     closeModal={closeModal}
                 />
+            </Modal>
+            <Modal
+                isOpen={guestModalIsOpen}
+                onAfterOpen={guestAfterOpenModal}
+                contentLabel="Detail hodiny"
+                ariaHideApp={false}
+                style={{
+                    content : {
+                        top: '30%',
+                        left: '50%',
+                        padding: '10px',
+                        right: 'auto',
+                        bottom: 'auto',
+                        width: '80%',
+                        transform: 'translate(-50%, -50%)'
+                    }
+                }}
+            >
+                <Button
+                    className="modal-close"
+                    variant="danger"
+                    onClick={closeGuestModal}
+                >
+                    <i className="fa fa-times" aria-hidden="true"></i>
+                </Button>
+                <h2 className='modal-title' ref={_subtitle => (subtitle = _subtitle)}>Detail hodiny</h2>
+                <div>{guestRecord.id}</div>
+                <div>{guestRecord.description}</div>
             </Modal>
         </div>
     );

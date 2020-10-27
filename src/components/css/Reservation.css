@@ -15,6 +15,11 @@
     width: 70%;
     margin:auto;
 }
+@media only screen and (max-width: 768px) {
+    .react-calendar {
+        width: 100%;
+    }
+}
 .modal-title {
     color: red;
     width: 50%;
