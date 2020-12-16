@@ -1,3 +1,9 @@
+#TODO
+* improve record detail (click on calendar)
+* check if login works
+* scroll to calendar section
+* data about me
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
