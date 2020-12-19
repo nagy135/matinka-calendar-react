@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Form, Button } from 'react-bootstrap';
 import {recordsUrl} from '../constants';
 
+import './css/AddRecordForm.css';
+
 const AddRecordForm = (props) => {
 
     const createNewRecord = async (event) => {
@@ -36,6 +38,7 @@ const AddRecordForm = (props) => {
 
     return (
         <Form
+            className="add-form"
             onSubmit={createNewRecord}
         >
             <Form.Group controlId="title">

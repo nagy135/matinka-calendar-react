@@ -145,6 +145,7 @@ const Reservation = (props) => {
                         top: '50%',
                         left: '50%',
                         padding: '10px',
+                        width: '50%',
                         right: 'auto',
                         bottom: 'auto',
                         marginRight: '-50%',
