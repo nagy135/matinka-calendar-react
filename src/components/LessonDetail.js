@@ -14,6 +14,8 @@ const LessonDetail = (props) => {
                 lastName: "nagy"
             }
         );
+        alert("Hodina rezervovana uspesne");
+        props.closeGuestModal();
     }
 
     if (guestRecord){

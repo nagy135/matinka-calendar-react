@@ -34,7 +34,6 @@ const Reservation = (props) => {
     });
 
     const getRecordDetail = async (date) => {
-        console.log(date);
         const response = await axios.get(`${recordsUrl}/find-by-date`, {
             params: {
                 date
@@ -198,6 +197,7 @@ const Reservation = (props) => {
                 <h2 className='modal-title' ref={_subtitle => (subtitle = _subtitle)}>Detail hodiny</h2>
                 <LessonDetail
                     guestRecord={guestRecord}
+                    closeGuestModal={closeGuestModal}
                 />
             </Modal>
         </div>
