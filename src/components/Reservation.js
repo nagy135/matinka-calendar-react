@@ -5,6 +5,7 @@ import axios from "axios";
 import {Button} from "react-bootstrap";
 
 import AddRecordForm from "./AddRecordForm";
+import LessonDetail from "./LessonDetail";
 
 import Modal from 'react-modal';
 
@@ -180,7 +181,7 @@ const Reservation = (props) => {
                         padding: '10px',
                         right: 'auto',
                         bottom: 'auto',
-                        width: '80%',
+                        width: '50%',
                         transform: 'translate(-50%, -50%)'
                     }
                 }}
@@ -193,8 +194,9 @@ const Reservation = (props) => {
                     <i className="fa fa-times" aria-hidden="true"></i>
                 </Button>
                 <h2 className='modal-title' ref={_subtitle => (subtitle = _subtitle)}>Detail hodiny</h2>
-                <div>{guestRecord.id}</div>
-                <div>{guestRecord.description}</div>
+                <LessonDetail
+                    guestRecord={guestRecord}
+                />
             </Modal>
         </div>
     );
