@@ -1,0 +1,11 @@
+.reserve-lesson {
+    margin-top: 1em;
+    float: right;
+    background-color: #1abc9c;
+    border-color: #1abc9c;
+}
+.reserve-lesson:hover {
+    border-color: #1abc9c;
+    color: #1abc9c;
+    background-color: #ffffff;
+}

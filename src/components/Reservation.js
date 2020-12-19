@@ -29,10 +29,12 @@ const Reservation = (props) => {
         date: '',
         time: '',
         title: '',
-        description: ''
+        description: '',
+        attendants: 0 
     });
 
     const getRecordDetail = async (date) => {
+        console.log(date);
         const response = await axios.get(`${recordsUrl}/find-by-date`, {
             params: {
                 date
