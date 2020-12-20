@@ -183,7 +183,7 @@ const Reservation = (props) => {
                         right: 'auto',
                         bottom: 'auto',
                         width: '50%',
-                        transform: 'translate(-50%, -50%)'
+                        transform: 'translate(-50%, -15%)'
                     }
                 }}
             >

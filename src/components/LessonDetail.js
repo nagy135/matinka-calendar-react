@@ -46,6 +46,7 @@ const LessonDetail = (props) => {
                     <ListGroup.Item>{guestRecord.description}</ListGroup.Item>
                     <ListGroup.Item>{guestRecord.attendants}</ListGroup.Item>
                 </ListGroup>
+                <hr />
                 <Form
                     className="attend-form"
                     onSubmit={reserveLesson}
