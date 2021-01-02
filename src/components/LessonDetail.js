@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from "react";
 import axios from "axios";
-import {ListGroup, Button, Form} from 'react-bootstrap';
+import {Container, Row, Col, Button, Form} from 'react-bootstrap';
 import {attendantsUrl} from '../constants';
 
 import './css/LessonDetail.css';
@@ -52,11 +52,24 @@ const LessonDetail = (props) => {
     if (guestRecord){
         return (
             <div>
-                <ListGroup>
-                    <ListGroup.Item>{guestRecord.id}</ListGroup.Item>
-                    <ListGroup.Item>{guestRecord.description}</ListGroup.Item>
-                    <ListGroup.Item>{attendantCount}</ListGroup.Item>
-                </ListGroup>
+                <Container className="record">
+                    <Row>
+                        <Col lg="3">#</Col>
+                        <Col>{guestRecord.id}</Col>
+                    </Row>
+                    <Row>
+                        <Col lg="3">Názov</Col>
+                        <Col>{guestRecord.title}</Col>
+                    </Row>
+                    <Row>
+                        <Col lg="3">Popis</Col>
+                        <Col>{guestRecord.description}</Col>
+                    </Row>
+                    <Row>
+                        <Col lg="3">prihlásených</Col>
+                        <Col>{attendantCount}</Col>
+                    </Row>
+                </Container>
                 <hr />
                 <Form
                     className="attend-form"
