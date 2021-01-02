@@ -1,9 +1,12 @@
-const recordsUrl = "http://localhost:4000/records";
-const usersUrl = "http://localhost:4000/users";
-const loginUrl = "http://localhost:4000/login";
+const base = "http://localhost:4000";
+const recordsUrl = base + "/records";
+const usersUrl = base + "/users";
+const loginUrl = base + "/login";
+const attendantsUrl = base + "/attendants";
 
 export {
     recordsUrl,
     usersUrl,
-    loginUrl
+    loginUrl,
+    attendantsUrl,
 };

@@ -1,8 +1,8 @@
 import React from 'react';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import {ListGroup, Button, Form} from 'react-bootstrap';
-import {recordsUrl} from '../constants';
+import {attendantsUrl} from '../constants';
 
 import './css/LessonDetail.css';
 
@@ -10,17 +10,25 @@ const LessonDetail = (props) => {
     let guestRecord = props.guestRecord;
 
     const reserveLesson = async () => {
-        console.log(attendant);
-        await axios.patch(recordsUrl + '/' + guestRecord.id + '/attend',
+        await axios.post(attendantsUrl,
             {
                 firstName: attendant.firstName,
                 lastName: attendant.lastName,
                 email: attendant.email,
+                recordId: guestRecord.id
             }
         );
         alert("Hodina rezervovana uspesne");
         props.closeGuestModal();
     }
+
+    const getAttendantCount = async (recordId) => {
+        const response = await axios.get(attendantsUrl + "/" + recordId + " /count");
+        console.log('now');
+        setAttendantCount(response.data.data.attendantCount);
+    }
+
+    const [attendantCount, setAttendantCount] = useState(0);
 
     const [attendant, setAttendant] = useState({
         firstName: '',
@@ -37,6 +45,9 @@ const LessonDetail = (props) => {
         if (newAttendant.firstName && newAttendant.lastName && newAttendant.email ) setCanSubmit(true);
         else setCanSubmit(false);
     }
+    useEffect(() => {
+        getAttendantCount(guestRecord.id)
+    }, []);
 
     if (guestRecord){
         return (
@@ -44,7 +55,7 @@ const LessonDetail = (props) => {
                 <ListGroup>
                     <ListGroup.Item>{guestRecord.id}</ListGroup.Item>
                     <ListGroup.Item>{guestRecord.description}</ListGroup.Item>
-                    <ListGroup.Item>{guestRecord.attendants}</ListGroup.Item>
+                    <ListGroup.Item>{attendantCount}</ListGroup.Item>
                 </ListGroup>
                 <hr />
                 <Form
