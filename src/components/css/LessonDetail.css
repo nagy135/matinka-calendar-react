@@ -13,3 +13,6 @@
 .record-title {
     border: 1px solid black;
 }
+.attendants-names {
+    padding-inline-start: 0;
+}
