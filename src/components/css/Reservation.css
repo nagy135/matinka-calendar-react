@@ -28,3 +28,8 @@
 .modal-close {
     float: right;
 }
+
+.logged-in {
+    border: 2px solid #c22330;
+    padding: 1em;
+}

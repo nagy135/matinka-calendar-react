@@ -109,15 +109,15 @@ const Reservation = (props) => {
 
     const refreshDates = () => {
         axios.get(recordsUrl)
-            .then(res => {
-                const data = res.data;
-                const records = data.data.records;
-                let newMarks = {};
-                records.map((e) => {
-                    newMarks[e.id] = e.date;
-                });
-                setMarks(newMarks);
-            });
+             .then(res => {
+                 const data = res.data;
+                 const records = data.data.records;
+                 let newMarks = {};
+                 records.map((e) => {
+                     newMarks[e.id] = e.date;
+                 });
+                 setMarks(newMarks);
+             });
     }
 
     useEffect(() => {
@@ -126,80 +126,81 @@ const Reservation = (props) => {
 
     return (
         <div className="Reservation">
-            <Calendar
-                style={{ height: 500 }}
-                onChange={datePicked}
-                value={value}
-                tileClassName={({ date }) => {
-                    const formattedDate = formatDate(date);
-                    if (Object.values(marks).find(x => x === formattedDate)) {
-                        return 'highlight'
-                    }
-                }}
-                minDate={new Date()}
+          <Calendar
+            className={props.logged ? "logged-in" : ""}
+            style={{ height: 500 }}
+            onChange={datePicked}
+            value={value}
+            tileClassName={({ date }) => {
+                const formattedDate = formatDate(date);
+                if (Object.values(marks).find(x => x === formattedDate)) {
+                    return 'highlight'
+                }
+            }}
+            minDate={new Date()}
+          >
+          </Calendar>
+          <Modal
+            isOpen={modalIsOpen}
+            onAfterOpen={afterOpenModal}
+            style={{
+                content : {
+                    top: '50%',
+                    left: '50%',
+                    padding: '10px',
+                    width: '50%',
+                    right: 'auto',
+                    bottom: 'auto',
+                    marginRight: '-50%',
+                    transform: 'translate(-50%, -50%)'
+                }
+            }}
+            contentLabel="Pridaj hodinu"
+            ariaHideApp={false}
+          >
+            <Button
+              className="modal-close"
+              variant="danger"
+              onClick={closeModal}
             >
-            </Calendar>
-            <Modal
-                isOpen={modalIsOpen}
-                onAfterOpen={afterOpenModal}
-                style={{
-                    content : {
-                        top: '50%',
-                        left: '50%',
-                        padding: '10px',
-                        width: '50%',
-                        right: 'auto',
-                        bottom: 'auto',
-                        marginRight: '-50%',
-                        transform: 'translate(-50%, -50%)'
-                    }
-                }}
-                contentLabel="Pridaj hodinu"
-                ariaHideApp={false}
+              <i className="fa fa-times" aria-hidden="true"></i>
+            </Button>
+            <h2 className='modal-title' ref={_subtitle => (subtitle = _subtitle)}>Pridaj hodinu</h2>
+            <AddRecordForm
+              getPickedDate={getDate}
+              closeModal={closeModal}
+            />
+          </Modal>
+          <Modal
+            isOpen={guestModalIsOpen}
+            onAfterOpen={guestAfterOpenModal}
+            contentLabel="Detail hodiny"
+            ariaHideApp={false}
+            style={{
+                content : {
+                    top: '30%',
+                    left: '50%',
+                    padding: '10px',
+                    right: 'auto',
+                    bottom: 'auto',
+                    width: '50%',
+                    transform: 'translate(-50%, -15%)'
+                }
+            }}
+          >
+            <Button
+              className="modal-close"
+              variant="danger"
+              onClick={closeGuestModal}
             >
-                <Button
-                    className="modal-close"
-                    variant="danger"
-                    onClick={closeModal}
-                >
-                    <i className="fa fa-times" aria-hidden="true"></i>
-                </Button>
-                <h2 className='modal-title' ref={_subtitle => (subtitle = _subtitle)}>Pridaj hodinu</h2>
-                <AddRecordForm
-                    getPickedDate={getDate}
-                    closeModal={closeModal}
-                />
-            </Modal>
-            <Modal
-                isOpen={guestModalIsOpen}
-                onAfterOpen={guestAfterOpenModal}
-                contentLabel="Detail hodiny"
-                ariaHideApp={false}
-                style={{
-                    content : {
-                        top: '30%',
-                        left: '50%',
-                        padding: '10px',
-                        right: 'auto',
-                        bottom: 'auto',
-                        width: '50%',
-                        transform: 'translate(-50%, -15%)'
-                    }
-                }}
-            >
-                <Button
-                    className="modal-close"
-                    variant="danger"
-                    onClick={closeGuestModal}
-                >
-                    <i className="fa fa-times" aria-hidden="true"></i>
-                </Button>
-                <h2 className='modal-title' ref={_subtitle => (subtitle = _subtitle)}>Detail hodiny</h2>
-                <LessonDetail
-                    guestRecord={guestRecord}
-                    closeGuestModal={closeGuestModal}
-                />
-            </Modal>
+              <i className="fa fa-times" aria-hidden="true"></i>
+            </Button>
+            <h2 className='modal-title' ref={_subtitle => (subtitle = _subtitle)}>Detail hodiny</h2>
+            <LessonDetail
+              guestRecord={guestRecord}
+              closeGuestModal={closeGuestModal}
+            />
+          </Modal>
         </div>
     );
 }
