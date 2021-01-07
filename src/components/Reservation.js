@@ -141,6 +141,7 @@ const Reservation = (props) => {
           >
           </Calendar>
           <Modal
+            className="reservation-modal"
             isOpen={modalIsOpen}
             onAfterOpen={afterOpenModal}
             style={{
@@ -148,7 +149,7 @@ const Reservation = (props) => {
                     top: '50%',
                     left: '50%',
                     padding: '10px',
-                    width: '50%',
+                    width: '80%',
                     right: 'auto',
                     bottom: 'auto',
                     marginRight: '-50%',
@@ -180,10 +181,13 @@ const Reservation = (props) => {
                 content : {
                     top: '30%',
                     left: '50%',
-                    padding: '10px',
+                    padding: '1.5rem',
                     right: 'auto',
                     bottom: 'auto',
-                    width: '50%',
+                    width: '80%',
+                    height: '80%',
+                    maxHeight: '100vh',
+                    overflowY: 'auto',
                     transform: 'translate(-50%, -15%)'
                 }
             }}
