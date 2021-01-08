@@ -6,10 +6,6 @@ $(document).ready(function() {
             $(".navbar-toggler").addClass("collapsed");
             $(".navbar-collapse").removeClass("show");
         }
-        else {
-            $(".navbar-toggler").removeClass("collapsed");
-            $(".navbar-collapse").addClass("show");
-        }
     }
 
     // Run it when the page loads
