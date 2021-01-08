@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from "react";
 import axios from "axios";
-import {Container, Row, Col, Button, Form} from 'react-bootstrap';
+import {Table, Container, Button, Form} from 'react-bootstrap';
 import {attendantsUrl} from '../constants';
 
 import './css/LessonDetail.css';
@@ -59,26 +59,24 @@ const LessonDetail = (props) => {
     return (
       <div>
         <Container className="record">
-          <Row>
-            <Col lg="3">#</Col>
-            <Col>{guestRecord.id}</Col>
-          </Row>
-          <Row>
-            <Col lg="3">Názov</Col>
-            <Col>{guestRecord.title}</Col>
-          </Row>
-          <Row>
-            <Col lg="3">Popis</Col>
-            <Col>{guestRecord.description}</Col>
-          </Row>
-          <Row>
-            <Col lg="3">prihlásených ({attendantCount})</Col>
-            <Col className="attendants-names">
-              <ul>
-                {attendantNames.map((e,i) => <li key={i}>{e}</li>)}
-              </ul>
-            </Col>
-          </Row>
+          <Table striped bordered hover>
+            <tbody>
+              <tr>
+                <td>Nazov</td>
+                <td>{guestRecord.title}</td>
+              </tr>
+              <tr>
+                <td>Popis</td>
+                <td>{guestRecord.description}</td>
+              </tr>
+              <tr>
+                <td>Prihlaseny</td>
+                <td>
+                  {attendantNames.map((e,i) => [<span key={i}>{e}</span>,<br/>])}
+                </td>
+              </tr>
+            </tbody>
+          </Table>
         </Container>
         <hr />
         <Form
