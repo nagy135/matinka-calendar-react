@@ -72,7 +72,7 @@ const LessonDetail = (props) => {
               <tr>
                 <td>Prihlaseny</td>
                 <td>
-                  {attendantNames.map((e,i) => [<span key={i}>{e}</span>,<br/>])}
+                  {attendantNames.map((e,i) => [<span key={i}>{e}</span>,<br key={e}/>])}
                 </td>
               </tr>
             </tbody>
