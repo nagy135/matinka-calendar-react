@@ -146,14 +146,19 @@ const Reservation = (props) => {
             onAfterOpen={afterOpenModal}
             style={{
                 content : {
-                    top: '50%',
+                    top: '30%',
                     left: '50%',
-                    padding: '10px',
-                    width: '80%',
+                    padding: '1.5rem',
                     right: 'auto',
                     bottom: 'auto',
-                    marginRight: '-50%',
-                    transform: 'translate(-50%, -50%)'
+                    width: '80%',
+                    height: '80%',
+                    backgroundColor: '#fbfbfb',
+                    borderRadius: '10px',
+                    border: '1px solid #b3b3b3',
+                    maxHeight: '100vh',
+                    overflowY: 'auto',
+                    transform: 'translate(12%, 19%)'
                 }
             }}
             contentLabel="Pridaj hodinu"
@@ -186,9 +191,12 @@ const Reservation = (props) => {
                     bottom: 'auto',
                     width: '80%',
                     height: '80%',
+                    transform: 'translate(-50%, -17%)',
+                    backgroundColor: '#fbfbfb',
+                    borderRadius: '10px',
                     maxHeight: '100vh',
                     overflowY: 'auto',
-                    transform: 'translate(-50%, -15%)'
+                    border: '1px solid #b3b3b3',
                 }
             }}
           >

@@ -1,6 +1,14 @@
 .highlight {
     color:#ffffff;
-    background: #1abc9c ;
+    background: #1abc9c !important;
+}
+.react-calendar__tile--now {
+    background-color: #ffffff;
+    border: 2px solid #304bcc !important;
+    border-radius: 5px;
+}
+.react-calendar__tile--now > abbr {
+    color: black;
 }
 
 .highlight:focus {
