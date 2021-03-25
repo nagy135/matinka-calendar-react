@@ -1,8 +1,9 @@
-const base = "http://68.183.73.10:4000";
+const base = process.env.REACT_APP_API;
 const recordsUrl = base + "/records";
 const usersUrl = base + "/users";
 const loginUrl = base + "/login";
 const attendantsUrl = base + "/attendants";
+
 
 export {
     recordsUrl,
